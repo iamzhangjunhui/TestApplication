@@ -16,11 +16,11 @@ public class MonthAdapter extends WheelView.WheelAdapter {
 
     @Override
     protected int getItemCount() {
-        return monthList.size();
+        return Integer.MAX_VALUE/2;
     }
 
     @Override
     protected String getItem(int index) {
-        return monthList.get(index)+"";
+        return monthList.get(index%monthList.size())+"";
     }
 }

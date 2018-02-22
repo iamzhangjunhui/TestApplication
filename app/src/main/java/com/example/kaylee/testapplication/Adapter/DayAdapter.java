@@ -21,12 +21,12 @@ public class DayAdapter extends WheelView.WheelAdapter {
     }
     @Override
     protected int getItemCount() {
-        return dayList.size();
+        return Integer.MAX_VALUE/2;
     }
 
     @Override
     protected String getItem(int index) {
         //解决有时dayList报空的错误
-            return dayList.get(index ) + "";
+            return dayList.get(index%dayList.size() ) + "";
     }
 }

@@ -14,6 +14,7 @@ import com.example.kaylee.testapplication.Adapter.YearAdapter;
 import com.example.kaylee.testapplication.widget.WheelView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kaylee on 2018/2/9.
@@ -30,6 +31,8 @@ public class DatePickerView extends LinearLayout {
     DayAdapter dayAdapter;
     MonthAdapter monthAdapter;
     YearAdapter yearAdapter;
+    int lastDayLength=0;
+
 
 
     private ArrayList<Integer> yearList = new ArrayList<>(YEAR_MAX - YEAR_MIN + 1);
@@ -73,15 +76,15 @@ public class DatePickerView extends LinearLayout {
         wheelView2.setAdapter(monthAdapter);
         dayAdapter = new DayAdapter(dayList);
         wheelView3.setAdapter(dayAdapter);
-        setDefaultDate(2019, 2, 9);
-        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+        setDefaultDate(2020, 12, 31);
+        final LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         addView(view);
         setLayoutParams(layoutParams);
 
         wheelView1.setOnItemSelectedListener(new WheelView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                year = YEAR_MIN + index;
+                year = YEAR_MIN + index%yearList.size();
                 int days = calcDay(year, month);
                 dayList = getDayList(days);
                 dayAdapter.setData(dayList);
@@ -91,9 +94,17 @@ public class DatePickerView extends LinearLayout {
         wheelView2.setOnItemSelectedListener(new WheelView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                month = index + 1;
+                month = index%monthList.size() + 1;
                 int days = calcDay(year, month);
+                lastDayLength=dayList.size();
                 dayList = getDayList(days);
+                if (days<lastDayLength){
+                    wheelView3.setCurrentItem(Integer.MAX_VALUE/4-Integer.MAX_VALUE/4%dayList.size()+dayList.size()-1);
+                    day=dayList.size();
+                }else {
+                    wheelView3.setCurrentItem(wheelView3.getCurrentItem() % lastDayLength + Integer.MAX_VALUE / 4 - Integer.MAX_VALUE / 4 % dayList.size());
+                    day=wheelView3.getCurrentItem() % lastDayLength+1;
+                }
                 dayAdapter.setData(dayList);
                 Toast.makeText(context, "onItemSelected: " + year + "年" + month + "月" + day + "日", Toast.LENGTH_SHORT).show();
 
@@ -102,7 +113,7 @@ public class DatePickerView extends LinearLayout {
         wheelView3.setOnItemSelectedListener(new WheelView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                day = index + 1;
+                day = index%dayList.size() + 1;
                 Toast.makeText(context, "onItemSelected: " + year + "年" + month + "月" + day + "日", Toast.LENGTH_SHORT).show();
 
             }
@@ -147,9 +158,9 @@ public class DatePickerView extends LinearLayout {
         this.year = year;
         this.month = month;
         this.day = day;
-        wheelView1.setCurrentItem(year - YEAR_MIN);
-        wheelView2.setCurrentItem(month - 1);
-        wheelView3.setCurrentItem(day - 1);
+        wheelView1.setCurrentItem(Integer.MAX_VALUE/4-Integer.MAX_VALUE/4%yearList.size()+year - YEAR_MIN);
+        wheelView2.setCurrentItem(Integer.MAX_VALUE/4-Integer.MAX_VALUE/4%monthList.size()+month - 1);
+        wheelView3.setCurrentItem(Integer.MAX_VALUE/4-Integer.MAX_VALUE/4%dayList.size()+day - 1);
     }
 
 }

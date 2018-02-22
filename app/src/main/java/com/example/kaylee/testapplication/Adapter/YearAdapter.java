@@ -16,11 +16,11 @@ public class YearAdapter extends WheelView.WheelAdapter {
 
     @Override
     protected int getItemCount() {
-        return yearList.size();
+        return Integer.MAX_VALUE/2;
     }
 
     @Override
     protected String getItem(int index) {
-        return yearList.get(index)+"";
+        return yearList.get(index%yearList.size())+"";
     }
 }
