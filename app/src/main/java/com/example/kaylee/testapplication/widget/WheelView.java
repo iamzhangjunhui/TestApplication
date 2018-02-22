@@ -82,7 +82,8 @@ public class WheelView extends ViewGroup {
 
     private int lastSelectedPosition = IDLE_POSITION;
     private int selectedPosition = IDLE_POSITION;
-
+    private int lastChangePosition = IDLE_POSITION;
+    private int changePosition = IDLE_POSITION;
     public WheelView(Context context) {
         super(context);
         init(context, null);
@@ -138,7 +139,22 @@ public class WheelView extends ViewGroup {
                 selectedPosition = wheelDecoration.centerItemPosition;
                 if (selectedPosition != lastSelectedPosition) {
                     listener.onItemSelected(wheelDecoration.centerItemPosition);
-                    lastSelectedPosition = selectedPosition;
+                    lastSelectedPosition=selectedPosition;
+                }
+            }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                changePosition = wheelDecoration.centerItemPosition;
+                if (onItemChangeListener!=null&&changePosition != lastChangePosition) {
+                    if (dy > 0) {
+                        onItemChangeListener.onItemChangeListener(wheelDecoration.centerItemPosition, true);
+                        lastChangePosition=changePosition;
+                    } else if(dy<0){
+                        onItemChangeListener.onItemChangeListener(wheelDecoration.centerItemPosition, false);
+                        lastChangePosition=changePosition;
+
+                    }
                 }
             }
         });
@@ -248,6 +264,18 @@ public class WheelView extends ViewGroup {
     public interface OnItemSelectedListener {
         void onItemSelected(int index);
     }
+    private OnItemChangeListener onItemChangeListener;
+    public void setOnItemChangeListener(OnItemChangeListener onItemChangeListener) {
+        this.onItemChangeListener= onItemChangeListener;
+    }
+
+    /**
+     * item selected
+     */
+    public interface OnItemChangeListener {
+        void onItemChangeListener(int index,boolean isScrollDown);
+    }
+
 
     /**
      * wheel adapter

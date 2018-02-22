@@ -91,6 +91,20 @@ public class DatePickerView extends LinearLayout {
                 Toast.makeText(context, "onItemSelected: " + year + "年" + month + "月" + day + "日", Toast.LENGTH_SHORT).show();
             }
         });
+        wheelView2.setOnItemChangeListener(new WheelView.OnItemChangeListener() {
+            @Override
+            public void onItemChangeListener(int index, boolean isScrollDown) {
+                int position=index+1;
+                if (position%monthList.size()==1&&isScrollDown&&year<YEAR_MAX){
+                    wheelView1.setCurrentItem(wheelView1.getCurrentItem()+1);
+                    year++;
+                }
+                if (position%monthList.size()==0&&!isScrollDown&&year>YEAR_MIN){
+                    wheelView1.setCurrentItem(wheelView1.getCurrentItem()-1);
+                    year--;
+                }
+            }
+        });
         wheelView2.setOnItemSelectedListener(new WheelView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
@@ -108,6 +122,36 @@ public class DatePickerView extends LinearLayout {
                 dayAdapter.setData(dayList);
                 Toast.makeText(context, "onItemSelected: " + year + "年" + month + "月" + day + "日", Toast.LENGTH_SHORT).show();
 
+            }
+        });
+        wheelView3.setOnItemChangeListener(new WheelView.OnItemChangeListener() {
+            @Override
+            public void onItemChangeListener(int index, boolean isScrollDown) {
+                int position=index+1;
+                if (position%dayList.size()==1&&isScrollDown){
+                    wheelView2.setCurrentItem(wheelView2.getCurrentItem()+1);
+                    month++;
+                   if (month>monthList.size()){
+                      month=month%monthList.size();
+                   }
+                    if (month==1){
+                        year++;
+                        wheelView1.setCurrentItem(wheelView1.getCurrentItem()+1);
+                    }
+                }
+                if (position%dayList.size()==0&&!isScrollDown){
+                    wheelView2.setCurrentItem(wheelView2.getCurrentItem()-1);
+                    if (month==1){
+                        month=12;
+                    }else {
+                        month--;
+                    }
+                    if (month==12){
+                        year--;
+                        wheelView1.setCurrentItem(wheelView1.getCurrentItem()-1);
+
+                    }
+                }
             }
         });
         wheelView3.setOnItemSelectedListener(new WheelView.OnItemSelectedListener() {
@@ -158,7 +202,7 @@ public class DatePickerView extends LinearLayout {
         this.year = year;
         this.month = month;
         this.day = day;
-        wheelView1.setCurrentItem(Integer.MAX_VALUE/4-Integer.MAX_VALUE/4%yearList.size()+year - YEAR_MIN);
+        wheelView1.setCurrentItem(year - YEAR_MIN);
         wheelView2.setCurrentItem(Integer.MAX_VALUE/4-Integer.MAX_VALUE/4%monthList.size()+month - 1);
         wheelView3.setCurrentItem(Integer.MAX_VALUE/4-Integer.MAX_VALUE/4%dayList.size()+day - 1);
     }
