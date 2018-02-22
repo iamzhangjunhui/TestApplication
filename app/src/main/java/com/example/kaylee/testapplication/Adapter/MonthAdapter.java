@@ -21,6 +21,6 @@ public class MonthAdapter extends WheelView.WheelAdapter {
 
     @Override
     protected String getItem(int index) {
-        return monthList.get(index%monthList.size())+"";
+        return monthList.get(index%monthList.size())+"月";
     }
 }

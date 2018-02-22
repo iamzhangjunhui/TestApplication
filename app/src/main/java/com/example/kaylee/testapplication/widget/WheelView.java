@@ -31,15 +31,15 @@ public class WheelView extends ViewGroup {
     /**
      * item color
      */
-    private int textColor = Color.BLACK;
+    private int textColor = Color.GRAY;
     /**
      * 中心item颜色
      */
-    private int textColorCenter = Color.RED;
+    private int textColorCenter = Color.BLACK;
     /**
      * 分割线颜色
      */
-    private int dividerColor = Color.BLACK;
+    private int dividerColor = Color.GRAY;
     /**
      * 文本大小
      */
@@ -296,4 +296,11 @@ public class WheelView extends ViewGroup {
         }
     }
 
+    public int getDividerSize() {
+        return dividerSize;
+    }
+
+    public int getDividerColor() {
+        return dividerColor;
+    }
 }

@@ -27,6 +27,6 @@ public class DayAdapter extends WheelView.WheelAdapter {
     @Override
     protected String getItem(int index) {
         //解决有时dayList报空的错误
-            return dayList.get(index%dayList.size() ) + "";
+            return dayList.get(index%dayList.size() ) + "日";
     }
 }

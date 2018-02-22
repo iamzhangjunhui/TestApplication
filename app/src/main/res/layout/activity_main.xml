@@ -3,6 +3,8 @@
     android:id="@+id/datepick"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="50dp"
-    android:layout_gravity="center"/>
+    android:gravity="center"
+    android:background="@android:color/transparent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"/>
 

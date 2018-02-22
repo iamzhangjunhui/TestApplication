@@ -57,19 +57,19 @@ class SimpleWheelDecoration extends WheelDecoration {
 
     @Override
     void drawDivider(Canvas c, Rect rect, boolean isVertical) {
-        if (isVertical) {
-            float dividerOff = (rect.height() - dividerSize) / 2.0f;
-            float firstY = rect.top + dividerOff;
-            c.drawLine(rect.left, firstY, rect.right, firstY, dividerPaint);
-            float secondY = rect.bottom - dividerOff;
-            c.drawLine(rect.left, secondY, rect.right, secondY, dividerPaint);
-        } else {
-            float dividerOff = (rect.width() - dividerSize) / 2.0f;
-            float firstX = rect.left + dividerOff;
-            c.drawLine(firstX, rect.top, firstX, rect.bottom, dividerPaint);
-            float secondX = rect.right - dividerOff;
-            c.drawLine(secondX, rect.top, secondX, rect.bottom, dividerPaint);
-        }
+//        if (isVertical) {
+//            float dividerOff = (rect.height() - dividerSize) / 2.0f;
+//            float firstY = rect.top + dividerOff;
+//            c.drawLine(rect.left, firstY, rect.right, firstY, dividerPaint);
+//            float secondY = rect.bottom - dividerOff;
+//            c.drawLine(rect.left, secondY, rect.right, secondY, dividerPaint);
+//        } else {
+//            float dividerOff = (rect.width() - dividerSize) / 2.0f;
+//            float firstX = rect.left + dividerOff;
+//            c.drawLine(firstX, rect.top, firstX, rect.bottom, dividerPaint);
+//            float secondX = rect.right - dividerOff;
+//            c.drawLine(secondX, rect.top, secondX, rect.bottom, dividerPaint);
+//        }
     }
 
 }

@@ -21,6 +21,6 @@ public class YearAdapter extends WheelView.WheelAdapter {
 
     @Override
     protected String getItem(int index) {
-        return yearList.get(index)+"";
+        return yearList.get(index)+"年";
     }
 }

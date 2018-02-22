@@ -1,8 +1,13 @@
 package com.example.kaylee.testapplication;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -162,6 +167,23 @@ public class DatePickerView extends LinearLayout {
 
             }
         });
+    }
+
+    //为什么自定义ViewGroup ondraw方法不会被调用？因为ViewGroup本身是不用绘制任何东西的，如果设置个背景颜色，就会调用onDraw（）方法
+    //这里用于画选中的分割线，没有单个WheelView进行画线，是因为单个画线不方便设置文字的位置
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Rect rect = new Rect(getLeft(),getTop(), getRight(), getBottom());
+        int dividerSize = wheelView1.getDividerSize();
+        Paint dividerPaint = new Paint();
+        dividerPaint.setAntiAlias(true);
+        dividerPaint.setColor(wheelView1.getDividerColor());
+        float dividerOff = (getHeight() - dividerSize) / 2.0f;
+        float firstY = rect.top + dividerOff;
+        canvas.drawLine(rect.left, firstY, rect.right, firstY, dividerPaint);
+        float secondY = rect.bottom - dividerOff;
+        canvas.drawLine(rect.left, secondY, rect.right, secondY, dividerPaint);
     }
 
     private int calcDay(int year, int month) {
